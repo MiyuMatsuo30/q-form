@@ -21,7 +21,7 @@ const signIn: (provider: AuthProvider, formData: FormData) => void = async(
 export default function CredentialSignInPage() {
     const theme = useTheme();
     return (
-        <AppProvider theme={theme} className="non-flex">
+        <AppProvider theme={theme}>
             <SignInPage signIn={signIn} providers={providers} />
         </AppProvider>
     );

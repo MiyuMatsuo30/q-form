@@ -7,7 +7,7 @@ import { Box, Button, Container, Grid, TextField } from "@mui/material";
 const Auth: React.FC = () => {
     const [isLogin, setIsLogin] = useState(true);
     // const { register, handleSubmit, formState: { errors } } = useForm<Inputs>();
-    const regex = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+    const regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
     const [email, setEmail] = useState<string | undefined>();
     const [password, setPassword] = useState<string | undefined>();
 
@@ -54,8 +54,8 @@ const Auth: React.FC = () => {
         <Fragment>
             <Container className="flex-none">
                 <Grid container>
-                <Grid item md={4}></Grid>
-                <Grid item md={4} className="flex-none">
+                <Grid item md={3}></Grid>
+                <Grid item md={6} className="flex-none">
                     <h2>{isLogin ? "新規登録" : "ログイン"}</h2>
                     <Box component="form">
                     <TextField
@@ -95,14 +95,15 @@ const Auth: React.FC = () => {
                     </Button>
                     <Grid container>
                         <Grid item>
-                            <span className="text-blue-600/100" onClick={() => setIsLogin(!isLogin)}>
-                                {isLogin ? "ログインしますか?" : "新規登録しますか?"}
+                            {isLogin ? "すでにアカウントをお持ちですか？　" : "アカウントをお持ちでないですか？　"}
+                            <span style={{ color: 'rgb(0, 112, 210)', cursor: 'pointer' }} onClick={() => setIsLogin(!isLogin)}>
+                                {isLogin ? "ログイン" : "新規登録"}
                             </span>
                         </Grid>
                     </Grid>
                 </Box>
             </Grid>
-            <Grid item md={4}></Grid>
+            <Grid item md={3}></Grid>
             </Grid>
         </Container>
         </Fragment>

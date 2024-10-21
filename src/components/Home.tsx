@@ -4,7 +4,9 @@ import { useMemo, useState } from "react";
 import { AppProvider, DashboardLayout } from '@toolpad/core';
 import type { Navigation, Router } from '@toolpad/core';
 import { createTheme } from '@mui/material/styles';
-import { Box, Typography } from '@mui/material';
+import Page2 from './Page2';
+import { Page3 } from './Page3';
+
 
 const NAVIGATION: Navigation = [
     {
@@ -40,19 +42,18 @@ const demoTheme = createTheme({
 });
 
 function DemoPageContent({ pathname }: { pathname: string }) {
-    return (
-        <Box
-            sx={{
-                py: 4,
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                textAlign: 'center',
-            }}
-        >
-            <Typography>Dashboard content for {pathname}</Typography>
-        </Box>
-    );
+    switch (pathname) {
+        case "/Page2":
+            return(
+                <Page2 />
+            )
+        case "/Page3":
+            return (
+                <Page3 />
+            )
+        default:
+            break;
+    }
 }
 
 interface DemoProps {

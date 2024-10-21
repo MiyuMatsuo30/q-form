@@ -10,9 +10,8 @@ const Auth: React.FC = () => {
     const regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
     const [email, setEmail] = useState<string | undefined>();
     const [password, setPassword] = useState<string | undefined>();
-
     const navigate = useNavigate()
-
+    const [canLogin, setCanLogin] = useState<boolean>(false);
     const Register = async () => {
         if (typeof email === "string" && typeof password === "string") {
             await createUserWithEmailAndPassword(auth, email, password)
@@ -20,9 +19,8 @@ const Auth: React.FC = () => {
                 console.log(userCredential);
                 navigate("/Home");
             })
-            .catch((error) => {
-                alert(error.message);
-                console.error(error);
+            .catch(() => {
+                
             });
         } else {
             alert("入力してください");
@@ -37,7 +35,7 @@ const Auth: React.FC = () => {
                 navigate("/Home");
             })
             .catch(() => {
-                
+                setCanLogin(true);
             });
         } else {
             alert("入力してください");
@@ -61,10 +59,11 @@ const Auth: React.FC = () => {
                     <TextField
                         style={{ marginTop: "0.5em", marginBottom: "0.5em" }}
                         name="email"
-                        label="E-mail"
+                        label="メールアドレス"
                         size="medium"
                         fullWidth
                         error={email!==undefined && !regex.test(email)}
+                        helperText={email!==undefined && !regex.test(email) ? "正しい形式で入力してください" : ""}
                         variant="outlined"
                         value={email}
                         onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -74,10 +73,11 @@ const Auth: React.FC = () => {
                     <TextField
                         style={{ marginTop: "0.5em", marginBottom: "0.5em" }}
                         name="password"
-                        label="Password"
+                        label="パスワード"
                         size="medium"
                         fullWidth
                         error={password!==undefined && password.length<6}
+                        helperText={password!==undefined && password.length<6 ? "6文字以上入力してください" : ""}
                         variant="outlined"
                         type="password"
                         value={password}
@@ -85,6 +85,11 @@ const Auth: React.FC = () => {
                         handleChangePassword(event);
                         }}
                     />
+                    <Grid container>
+                        <Grid item>
+                            <p style={{color: '#dc143c'}}>{canLogin && "メールアドレスまたはパスワードが正しくありません"}</p>
+                        </Grid>
+                    </Grid>
                     <Button
                         fullWidth
                         disabled={password===undefined || password.length<6 || email===undefined || !regex.test(email)}

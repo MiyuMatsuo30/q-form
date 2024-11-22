@@ -1,7 +1,7 @@
 import MenuBookTwoToneIcon from '@mui/icons-material/MenuBookTwoTone';
 import InsertPhotoTwoToneIcon from '@mui/icons-material/InsertPhotoTwoTone';
 import { useMemo, useState } from "react";
-import { AppProvider, DashboardLayout } from '@toolpad/core';
+import { AppProvider, Account, DashboardLayout } from '@toolpad/core';
 import type { Navigation, Router } from '@toolpad/core';
 import { createTheme } from '@mui/material/styles';
 import Page2 from './Page2';

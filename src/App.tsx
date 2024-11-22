@@ -8,10 +8,10 @@ import Auth from "./components/Auth";
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<Auth />} />
-      <Route path="/Home" element={<Home />} />
-      <Route path="/Page2" element={<Page2 />} />
-      <Route path="/Page3" element={<Page3 />} />
+      <Route path="/" element={<Home />} />
+      <Route path="/auth" element={<Auth />} />
+      <Route path="/page2" element={<Page2 />} />
+      <Route path="/page3" element={<Page3 />} />
     </Routes>
   )
 }

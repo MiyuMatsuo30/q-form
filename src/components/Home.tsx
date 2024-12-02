@@ -75,7 +75,7 @@ const Home = (props: DemoProps) => {
     
     return (
         <AppProvider
-            branding={{logo:"", title:"辞書"}}
+            branding={{logo:"", title:"Music"}}
             navigation={NAVIGATION}
             router={router}
             theme={demoTheme}

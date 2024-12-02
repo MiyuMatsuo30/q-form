@@ -1,9 +1,10 @@
-import { Button, Container, Grid, TextField } from '@mui/material';
-import wordsApiRes from '../types/response/wordsApiRes';
+import { Box, Button, Container, TextField, Paper } from '@mui/material';
+import Grid from '@mui/material/Grid2';
+import { styled } from '@mui/material/styles';
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const WordsApi: React.FC = async (word: string) => {
+const WordsApi = async (word: string) => {
     const options = {
     method: 'GET',
     url: `https://wordsapiv1.p.rapidapi.com/words/${word}`,
@@ -21,40 +22,140 @@ const WordsApi: React.FC = async (word: string) => {
             pronunciation: response.data.pronuncication,
             frequency: response.data.frequency
         }
-        return data;
+        return data.results;
     } catch (error) {
         console.error(error);
         return;
     }
 }
 
+const Item = styled(Paper)(({ theme }) => ({
+    backGroundColor: '#fff',
+    ...theme.typography.body2,
+    padding: theme.spacing(1),
+    textAlign: 'left',
+    color: theme.palette.text.secondary,
+    ...theme.applyStyles('dark', {
+        backgroundColor: "#1A2027",
+    }),
+}));
+
 const Page2 = () => {
     const [word, setWord] = useState("");
     const handleChangeWord = (event: React.ChangeEvent<HTMLInputElement>) => {
         setWord(event.currentTarget.value);
     };
-    type Props = {
-        word: string
-    } 
-    const Result = async ({word}: Props) => {
-        const result = await WordsApi(word);
-        console.log(result);
+    const [wordResult, setWordResult] = useState([{
+        definition: "" ,    // 定義
+    }]);
+    const handleSetResult = async () => {
+        if (word !== "") {
+            const result = await WordsApi(word);
+            setWordResult(result);
+        } else {
+            setWordResult(wordResult);
+        }
+    }
+    const items = {
+        definition: "定義", 
+        synonyms: "類義語", 
+        antonyms: "対義語",
+        examples: "例文",
+        typeOf: "一般化",
+        hasTypes: "具体化",
+        partOf: "部分",
+        hasParts: "部品",
+        instanceOf: "一例",
+        hasInstances: "一例",
+        similarTo: "関連単語",
+        also: "イディオム",
+        entails: "示唆",
+        memberOf: "属性",
+        hasMembers: "属性",
+        substanceOf: "含まれる物質",
+        hasSubstances: "含まれる物質",
+        inCategory: "カテゴリ",
+        hasCategories: "カテゴリ",
+        usageOf: "使用例",
+        hasUsages: "使用例",
+        inRegion: "地域",
+        regionOf: "地域",
+        pertainsTo: "関連語",
+        partOfSpeech: "品詞",
+    }
+    const gets = [
+        "definition",
+        "synonyms",
+        "antonyms",
+        "examples",
+        "typeOf",
+        "hasTypes",
+        "partOf",
+        "hasParts",
+        "instanceOf",
+        "hasInstances",
+        "similarTo",
+        "also",
+        "entails",
+        "memberOf",
+        "hasMembers",
+        "substanceOf", "hasSubstances",
+        "inCategory",
+        "hasCategories",
+        "usageOf",
+        "hasUsages",
+        "inRegion",
+        "regionOf",
+        "pertainsTo",
+        "partOfSpeech"
+    ]
+    function ShowItems(result) {
         return (
-            <div>{}</div>
+            {gets.map((getName, gKey) => (
+            result[getName] && (<Grid 
+                key={gKey}
+                container
+                direction="row"
+                sx={{
+                    justifyContent: "left",
+                    alignItems: "center",
+                }}
+            >
+                <Grid item sx={{width: 1/6, fontSize: 20}}>{items[getName]}</Grid>
+                <Grid item sx={{width: 5/6}}>{result[getName]}</Grid>
+            </Grid>)
+        ))})
+    }
+    const Result = () => {
+        return (
+            <Grid 
+                container 
+                direction="column"
+                sx={{
+                    justifyContent: "flex-start",
+                    alignItems: "flex-start",
+                }}
+                spacing={2}>
+                {wordResult.map((res, key) => (
+                    <Box sx={{ width: 1/1 }} key={key}>
+                        <Item >
+                            <Grid>
+                                <Grid item sx={{color: '#3f50b5'}}>{key+1}.</Grid>
+                            </Grid>
+                            <ShowItems result={res} />
+                        </Item>
+                    </Box>
+                ))}
+            </Grid>
         )
     }
-    const [wordResult, setWordResult] = useState((<div></div>));
-    const handleSetResult = () => {
-        setWordResult(
-            <Result word={word} />
-        )
-    }
+
     return (
         <Container>
             <Grid container>
                 <h1>英英辞典</h1>
             </Grid>
-            <Grid container>
+            <Grid container sx={{paddingBottom: 5}}>
                 <Grid>
                     <TextField
                         id="search-area"
@@ -63,14 +164,14 @@ const Page2 = () => {
                         onChange={(event: React.ChangeEvent<HTMLInputElement>) => {handleChangeWord(event);}}
                     />
                 </Grid>
-                <Grid>
-                    <Button 
+                <Grid sx={{textAlign: "center"}}>
+                    <Button
                         variant="contained"
                         onClick={() => {handleSetResult()}}
                     >調べる</Button>
-                    {wordResult}
                 </Grid>
             </Grid>
+            {wordResult[0].definition !== "" && (<Result />)}
         </Container>
     )
 }

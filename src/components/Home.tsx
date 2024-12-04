@@ -1,10 +1,9 @@
 import MenuBookTwoToneIcon from '@mui/icons-material/MenuBookTwoTone';
 import InsertPhotoTwoToneIcon from '@mui/icons-material/InsertPhotoTwoTone';
 import { useMemo, useState } from "react";
-import { AppProvider, Account, DashboardLayout } from '@toolpad/core';
-import type { Navigation, Router } from '@toolpad/core';
+import { AppProvider, DashboardLayout, Navigation, Router } from '@toolpad/core';
 import { createTheme } from '@mui/material/styles';
-import Page2 from './Page2';
+import WordDict from './WordDict';
 import { Page3 } from './Page3';
 
 
@@ -14,7 +13,7 @@ const NAVIGATION: Navigation = [
         title: 'ページ',
     },
     {
-        segment: 'Page2',
+        segment: 'Word',
         title: 'word',
         icon: <MenuBookTwoToneIcon />,
     },
@@ -43,9 +42,9 @@ const demoTheme = createTheme({
 
 function DemoPageContent({ pathname }: { pathname: string }) {
     switch (pathname) {
-        case "/Page2":
+        case "/Word":
             return(
-                <Page2 />
+                <WordDict />
             )
         case "/Page3":
             return (
@@ -75,7 +74,7 @@ const Home = (props: DemoProps) => {
     
     return (
         <AppProvider
-            branding={{logo:"", title:"Music"}}
+            branding={{logo:"", title:"なんでもbox"}}
             navigation={NAVIGATION}
             router={router}
             theme={demoTheme}

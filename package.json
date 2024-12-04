@@ -15,11 +15,12 @@
     "test": "firebase emulators:exec --only firestore 'vitest run'"
   },
   "dependencies": {
-    "@emotion/react": "^11.13.3",
-    "@emotion/styled": "^11.13.0",
-    "@mui/material": "^6.1.1",
+    "@emotion/react": "^11.13.5",
+    "@emotion/styled": "^11.13.5",
+    "@mui/icons-material": "^6.1.9",
+    "@mui/material": "^6.1.9",
     "@mui/styles": "^6.1.1",
-    "@toolpad/core": "^0.5.2",
+    "@toolpad/core": "^0.10.0",
     "@typescript-eslint/eslint-plugin": "^8.5.0",
     "@typescript-eslint/parser": "^8.5.0",
     "axios": "^1.7.7",

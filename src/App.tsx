@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 // import CredentialSignInPage from './components/SignIn';
 import Home from './components/Home';
-import Page2 from './components/Page2';
+import Page2 from './components/WordDict';
 import { Page3 } from './components/Page3';
 import Auth from "./components/Auth";
 

@@ -1,10 +1,11 @@
 import { Box, Button, Container, TextField, Paper, CircularProgress } from '@mui/material';
 import Grid2 from '@mui/material/Grid2';
 import { styled } from '@mui/material/styles';
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import { color, lightColor } from '../hooks/ColorPalete';
 import { gets, items } from '../hooks/WordsApiResults';
+import { ItemsType } from '../types/response/ItemsType';
 
 // Words API呼び出し
 const WordsApi = async (word: string) => {
@@ -18,13 +19,13 @@ const WordsApi = async (word: string) => {
     };
     try {
         const response = await axios.request(options);
-        const data = response.data.results
+        const data: ItemsType[] = response.data.results;
         return data;
     } catch (error) {
         console.error(error);
         alert("見つかりませんでした。")
     }
-}
+};
 
 // Paperのスタイル(ダークモード込み)
 const Item = styled(Paper)(({ theme }) => ({
@@ -38,15 +39,16 @@ const Item = styled(Paper)(({ theme }) => ({
     }),
 }));
 
-type wordRes = [{definition: string|[], synonyms: string|[]}]
-
 const WordDict = () => {
+    type ResProps = {res: ItemsType};
+    // 入力英単語格納
     const [word, setWord] = useState("");
-    const [loading, setLoading] = useState(true);
     const handleChangeWord = (event: React.ChangeEvent<HTMLInputElement>) => {
         setWord(event.currentTarget.value);
-    }
-    const [wordResult, setWordResult] = useState<wordRes|string|undefined>()
+    };
+
+    // APIレスポンス
+    const [wordResult, setWordResult] = useState<ItemsType[] | string | undefined>();
     const handleSetResult = async () => {
         if (word !== "") {
             const result = await WordsApi(word);
@@ -54,21 +56,41 @@ const WordDict = () => {
         } else {
             setWordResult("見つかりませんでした。");
         }
-    }
-    const handleSetLoading = (e: boolean) => {setLoading(e)}
-    const ShowItems = ({res}) => {
+    };
+
+    // timeout
+    const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+    const [time, setTime] = useState(false);
+    // 読み込み時のProgress表示
+    const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        return () => {
+            clearTimeout(timer.current);
+        };
+    }, []);
+
+    const handleSetLoading = (e: boolean) => {
+        setLoading(e);
+        if ( e ) {
+            timer.current = setTimeout(() => {setLoading(false); setTime(true);}, 2000);
+        };
+    };
+    
+    function ShowItems(props: ResProps) {
+        const { res } = props;
         return (
             gets.map((getName, gKey) => (
-            res[getName] && (<Grid2 
-                key={gKey}
-                container
-                direction="row"
-                sx={{
-                    padding: 1,
-                    justifyContent: "left",
-                    alignItems: "center",
-                }}
-            >
+                res[getName] && (<Grid2 
+                    key={gKey}
+                    container
+                    direction="row"
+                    sx={{
+                        padding: 1,
+                        justifyContent: "left",
+                        alignItems: "center",
+                    }}
+                >
                 <Grid2 sx={[
                     (theme) => ({
                         color: color[gKey], 
@@ -94,7 +116,7 @@ const WordDict = () => {
         if( typeof wordResult === "string" ) {
             return (<Grid2>{wordResult}</Grid2>)
         } else if ( typeof wordResult !== "undefined" ) {
-            setLoading(true);
+            handleSetLoading(false);
             return (
                 <Grid2 
                     container 
@@ -116,6 +138,8 @@ const WordDict = () => {
                     ))}
                 </Grid2>
             )
+        } else if ( time ) {
+            return(<Grid2>タイムアウトしました。</Grid2>)
         } else {
             return (<Grid2>英単語を入力してください。</Grid2>)
         }
@@ -139,11 +163,11 @@ const WordDict = () => {
                     <Button
                         sx={{textAlign: "flex", height: 1, width: 1}}
                         variant="contained"
-                        onClick={() => {handleSetResult(); handleSetLoading(false);}}
+                        onClick={() => {handleSetResult(); handleSetLoading(true);}}
                     >調べる</Button>
                 </Grid2>
             </Grid2>
-            {wordResult || loading ? <Result /> : <CircularProgress />}
+            {wordResult || !loading ? <Result /> : <CircularProgress />}
         </Container>
     )
 }

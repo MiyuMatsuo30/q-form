@@ -13,8 +13,8 @@ const WordsApi = async (word: string) => {
         method: 'GET',
         url: `https://wordsapiv1.p.rapidapi.com/words/${word}`,
         headers: {
-            'x-rapidapi-key': import.meta.env.VITE_RAPIDAPI_KEY,
-            'x-rapidapi-host': import.meta.env.VITE_RAPIDAPI_HOST
+            'x-rapidapi-key': '2b74b698b7msh54cf0f18eeff0c2p1b1cf1jsn257225d28e8e',
+            'x-rapidapi-host': 'wordsapiv1.p.rapidapi.com'
         }
     };
     try {

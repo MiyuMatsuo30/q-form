@@ -17,8 +17,8 @@ function getRandomInt(min: number, max: number) {
 //         url: 'https://accounts.spotify.com/api/token',
 //         headers: {
 //             'Content-Type': 'application/x-www-form-urlencoded',
-//             'client_id': import.meta.env.SPOTIFYAPI_KEY,
-//             'client_secret': import.meta.env.SPOTIFYAPI_SECRET
+//             'client_id': import.meta.env.VITE_SPOTIFYAPI_KEY,
+//             'client_secret': import.meta.env.VITE_SPOTIFYAPI_SECRET
 //         },
 //         form: {
 //             'grant_type': 'client_credentials',
@@ -39,7 +39,7 @@ const SpotifyAPI = async() => {
         method: 'GET', 
         url: `https://api.spotify.com/v1/search?q=${getRandomInt(0, moji.length-1)}&limit=${limit}?type=track?offset=0`,
         headers: {
-            'Authorization': `Bearer  ${import.meta.env.SPOTIFYAPI_KEY}_${import.meta.env.SPOTIFYAPI_SECRET}`
+            'Authorization': `Bearer  ${import.meta.env.VITE_SPOTIFYAPI_KEY}_${import.meta.env.VITE_SPOTIFYAPI_SECRET}`
         }
     }
     try {

@@ -13,8 +13,8 @@ const WordsApi = async (word: string) => {
         method: 'GET',
         url: `https://wordsapiv1.p.rapidapi.com/words/${word}`,
         headers: {
-            'x-rapidapi-key': import.meta.env.RAPIDAPI_KEY,
-            'x-rapidapi-host': import.meta.env.RAPIDAPI_HOST
+            'x-rapidapi-key': import.meta.env.VITE_RAPIDAPI_KEY,
+            'x-rapidapi-host': import.meta.env.VITE_RAPIDAPI_HOST
         }
     };
     try {
@@ -23,7 +23,7 @@ const WordsApi = async (word: string) => {
         return data;
     } catch (error) {
         console.error(error);
-        alert("見つかりませんでした。");
+        return "見つかりませんでした。";
     }
 };
 

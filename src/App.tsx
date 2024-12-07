@@ -1,8 +1,8 @@
 import { Routes, Route } from "react-router-dom";
 // import CredentialSignInPage from './components/SignIn';
 import Home from './components/Home';
-import Page2 from './components/WordDict';
-import { Page3 } from './components/Page3';
+import WordDict from './components/WordDict';
+import Music from './components/Music';
 import Auth from "./components/Auth";
 
 function App() {
@@ -10,8 +10,8 @@ function App() {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/auth" element={<Auth />} />
-      <Route path="/page2" element={<Page2 />} />
-      <Route path="/page3" element={<Page3 />} />
+      <Route path="/worddict" element={<WordDict />} />
+      <Route path="/music" element={<Music />} />
     </Routes>
   )
 }

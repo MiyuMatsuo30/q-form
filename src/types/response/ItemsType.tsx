@@ -54,4 +54,4 @@ export type ItemsType2 = {
     partOfSpeech: string | [],
 };
 
-export type ItemsType = {[key: string]: string | [string]};
+export type ItemsType = {[key: string]: string | string[]};

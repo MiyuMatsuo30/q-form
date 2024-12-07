@@ -13,8 +13,8 @@ const WordsApi = async (word: string) => {
         method: 'GET',
         url: `https://wordsapiv1.p.rapidapi.com/words/${word}`,
         headers: {
-            'x-rapidapi-key': '2b74b698b7msh54cf0f18eeff0c2p1b1cf1jsn257225d28e8e',
-            'x-rapidapi-host': 'wordsapiv1.p.rapidapi.com'
+            'x-rapidapi-key': import.meta.env.RAPIDAPI_KEY,
+            'x-rapidapi-host': import.meta.env.RAPIDAPI_HOST
         }
     };
     try {
@@ -23,7 +23,7 @@ const WordsApi = async (word: string) => {
         return data;
     } catch (error) {
         console.error(error);
-        alert("見つかりませんでした。")
+        alert("見つかりませんでした。");
     }
 };
 
@@ -73,7 +73,7 @@ const WordDict = () => {
     const handleSetLoading = (e: boolean) => {
         setLoading(e);
         if ( e ) {
-            timer.current = setTimeout(() => {setLoading(false); setTime(true);}, 2000);
+            timer.current = setTimeout(() => {setLoading(false); setTime(true);}, 5000);
         };
     };
     
@@ -107,7 +107,7 @@ const WordDict = () => {
                         fontSize: 16})
                     ]}
                 >{ typeof res[getName] == 'object' ? 
-                res[getName].map((value: string, key: number) => (key === res[getName].length-1 ? value : `${value} / `)) 
+                res[getName].map((value: string, key: number) => (key === res[getName].length - 1 ? value : `${value} / `)) 
                 : res[getName] }</Grid2>
             </Grid2>)
         )))

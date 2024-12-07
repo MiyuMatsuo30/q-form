@@ -1,10 +1,10 @@
 import MenuBookTwoToneIcon from '@mui/icons-material/MenuBookTwoTone';
-import InsertPhotoTwoToneIcon from '@mui/icons-material/InsertPhotoTwoTone';
+import LibraryMusicIcon from '@mui/icons-material/LibraryMusic';
 import { useMemo, useState } from "react";
 import { AppProvider, DashboardLayout, Navigation, Router } from '@toolpad/core';
 import { createTheme } from '@mui/material/styles';
 import WordDict from './WordDict';
-import { Page3 } from './Page3';
+import Music from './Music';
 
 
 const NAVIGATION: Navigation = [
@@ -17,11 +17,11 @@ const NAVIGATION: Navigation = [
         title: 'word',
         icon: <MenuBookTwoToneIcon />,
     },
-    {
-        segment: 'Page3',
-        title: 'photo',
-        icon: <InsertPhotoTwoToneIcon />
-    },
+    // {
+    //     segment: 'Music',
+    //     title: 'music',
+    //     icon: <LibraryMusicIcon />
+    // },
 ]
 
 const demoTheme = createTheme({
@@ -46,10 +46,10 @@ function DemoPageContent({ pathname }: { pathname: string }) {
             return(
                 <WordDict />
             )
-        case "/Page3":
-            return (
-                <Page3 />
-            )
+        // case "/Music":
+        //     return (
+        //         <Music />
+        //     )
         default:
             break;
     }
